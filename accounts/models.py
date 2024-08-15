@@ -8,5 +8,5 @@ class Accounts(models.Model):
     license_no = models.CharField(max_length=50)
     
     def __str__(self):
-        return self.name
+        return self.org_name
  
