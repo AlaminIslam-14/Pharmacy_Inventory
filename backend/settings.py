@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #local libraries
     'accounts',
     'drug',
+    'stock',
 ]
 
 MIDDLEWARE = [
