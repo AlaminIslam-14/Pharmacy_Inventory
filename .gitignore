@@ -1,0 +1,44 @@
+# Python #
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pydist
+*.pyz
+*.pyz.dist
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+
+# Environments #
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VS Code #
+.vscode/
+
+# Mac OS #
+.DS_Store
+
+# PyCharm #
+.idea/
+
+# Ignore virtual environment
+venv/
+
+# Ignore sensitive environment variables
+.env
+
+# Node #
+node_modules/
