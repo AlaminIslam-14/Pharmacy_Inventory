@@ -22,6 +22,9 @@ This is our demo of Pharmacy Management System api built using Django Rest Frame
 
 The following diagram represents the database schema:
 
+<img src="./contents/ER_Diagram.jpeg"/>
+
+
 - **Organization**: Stores organization information (name, email, password, etc.).
 - **UserRole**: Defines roles within an organization.
 - **Medicine**: Stores information about medicines.
@@ -44,7 +47,31 @@ You can find all the required Python packages in `requirements.txt`.
 ## Installation
 
 1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/AlaminIslam-14/Pharmacy_Inventory.git
-   cd pharmacy-management-system
- 
+    ```bash
+    git clone https://github.com/AlaminIslam-14/Pharmacy_Inventory.git
+    cd Pharmacy_Inventory
+    ```
+
+2. **Create a virtual environment and activate it:**
+    ```bash
+    python3 -m venv env
+    source env/bin/activate   # On Windows: env\Scripts\activate
+    ```
+
+3. **Install the dependencies:**
+    ```bash
+    pip install -r requirements.txt     
+    ```
+
+4. **Run migrations:**
+    ```bash
+    python manage.py migrate
+    ```
+
+5. **Start the development server:**
+    ```bash
+    python manage.py runserver
+    ```
+
+6. **Access the API:**
+The API will be available at http://127.0.0.1:8000/
