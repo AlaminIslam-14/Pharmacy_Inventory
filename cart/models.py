@@ -5,14 +5,14 @@ from drug.models import Drug
 from user_role.models import UserRole
 
 class Cart(models.Model):
-    acc_id = models.ForeignKey(Accounts, on_delete=models.CASCADE, unique=True)
+    buyer_id = models.ForeignKey(Accounts, on_delete=models.CASCADE, unique=True)
     total_cost = models.DecimalField(default=0.0, max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"Cart {self.id} for {self.acc_id.org_name}"
+        return f"Cart {self.id} for {self.buyer_id.org_name}"
     
     def save(self, *args, **kwargs):
-        if UserRole.objects.filter(acc_id=self.acc_id, role=UserRole.SELLER).exists():
+        if UserRole.objects.filter(acc_id=self.buyer_id, role=UserRole.SELLER).exists():
             raise ValidationError("A company cannot have a cart.")
 
         super().save(*args, **kwargs)
@@ -28,11 +28,12 @@ class CartItem(models.Model):
     item_cost = models.DecimalField(default=0.0, max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"Cart {self.cart_id.acc_id.org_name}: {self.drug_id.name} - {self.quantity}"
+        return f"Cart {self.cart_id.buyer_id.org_name}: {self.drug_id.name} - {self.quantity}"
 
     def save(self, *args, **kwargs):
         self.item_cost = self.drug_id.price * self.quantity
         super().save(*args, **kwargs)
+
 
         self.cart_id.total_cost = sum(item.item_cost for item in self.cart_id.cartitem_set.all())
         self.cart_id.save(update_fields=['total_cost'])
