@@ -4,7 +4,7 @@ from accounts.models import Accounts
 from user_role.models import UserRole  
 
 class Drug(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     type = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     acc_id = models.ForeignKey(Accounts, on_delete=models.CASCADE)
