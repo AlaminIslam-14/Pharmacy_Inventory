@@ -5,7 +5,7 @@ from drug.models import Drug
 from user_role.models import UserRole
 
 class Cart(models.Model):
-    buyer_id = models.ForeignKey(Accounts, on_delete=models.CASCADE, unique=True)
+    buyer_id = models.OneToOneField(Accounts, on_delete=models.CASCADE, unique=True)
     total_cost = models.DecimalField(default=0.0, max_digits=10, decimal_places=2)
 
     def __str__(self):
