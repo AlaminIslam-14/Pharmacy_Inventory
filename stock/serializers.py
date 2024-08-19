@@ -15,8 +15,8 @@ class StockSerializer(serializers.ModelSerializer):
         existing_stock = Stock.objects.filter(drug_id=drug, batch_id=batch_id).first()
  
         quantity = validated_data.get('quantity', instance.quantity)
-        if(existing_stock.quantit < quantity):
-            raise ValidationError("The new quantity cannot be less than the existing quantity.")
+        if(quantity < 0 and existing_stock.quantity < -1*quantity):
+            raise ValidationError("There is not enough quantity left")
         instance.quantity = existing_stock.quantity + quantity
         instance.save(update_fields=['quantity'])
         return instance
