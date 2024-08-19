@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Stock
+from django.core.exceptions import ValidationError
  
 class StockSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,7 +15,9 @@ class StockSerializer(serializers.ModelSerializer):
         existing_stock = Stock.objects.filter(drug_id=drug, batch_id=batch_id).first()
  
         quantity = validated_data.get('quantity', instance.quantity)
-        instance.quantity = quantity + existing_stock.quantity
+        if(existing_stock.quantit < quantity):
+            raise ValidationError("The new quantity cannot be less than the existing quantity.")
+        instance.quantity = existing_stock.quantity + quantity
         instance.save(update_fields=['quantity'])
         return instance
  
