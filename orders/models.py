@@ -21,3 +21,7 @@ class Order(models.Model):
  
     def __str__(self):
         return f"Request {self.id} for {self.seller_id.name} - {self.status}"
+    
+    def save(self, *args, **kwargs):
+        self.total_cost = self.cart_id.total_cost
+        super().save(*args, **kwargs)
