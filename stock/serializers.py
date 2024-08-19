@@ -9,10 +9,9 @@ class StockSerializer(serializers.ModelSerializer):
  
     def update(self, instance, validated_data):
         drug = validated_data.get('drug_id')
-        batch_id = validated_data.get('batch_id')
         quantity = validated_data.get('quantity')
  
-        existing_stock = Stock.objects.filter(drug_id=drug, batch_id=batch_id).first()
+        existing_stock = Stock.objects.filter(drug_id=drug).first()
  
         quantity = validated_data.get('quantity', instance.quantity)
         if(quantity < 0 and existing_stock.quantity < -1*quantity):
