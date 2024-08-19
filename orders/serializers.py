@@ -17,14 +17,11 @@ class OrderSerializer(serializers.ModelSerializer):
     
     def __init__(self, *args, **kwargs):
         super(OrderSerializer, self).__init__(*args, **kwargs)
-        # Make 'status' read-only for all requests except PUT
         if self.context['request'].method != 'PUT':
             self.fields['status'].read_only = True
  
     def get_updated_stock(self, obj):
-        # Get all stock items
         stocks = Stock.objects.all()
-        # Serialize the stock items
         return StockSerializer(stocks, many=True).data
  
     def create(self, validated_data):
@@ -39,14 +36,11 @@ class OrderSerializer(serializers.ModelSerializer):
             stock.quantity -= item.quantity
             stock.save()
             logger.info(f"Updated stock for drug_id {item.drug_id}: new quantity {stock.quantity}")
-        # Delete cart items
         cart_items.delete()
-        # Set the total cost of the cart to zero and save the cart
         cart = order.cart_id
         cart.total_cost = 0
         cart.save(update_fields=['total_cost'])
         logger.info(f"Cart {cart.id} total cost set to zero and saved.")
-        #dummy comment
  
             
  
