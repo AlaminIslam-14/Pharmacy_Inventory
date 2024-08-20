@@ -2,34 +2,29 @@ from rest_framework import serializers
 from .models import Order
 from stock.models import Stock
 from stock.serializers import StockSerializer
-from cart.models import CartItem,Cart
-import logging
- 
-logger = logging.getLogger(__name__)
- 
+from cart.models import CartItem
+
 class OrderSerializer(serializers.ModelSerializer):
-    updated_stock = serializers.SerializerMethodField()
- 
+    seller_name = serializers.CharField(source='seller_id.org_name', read_only=True)
+    buyer_name = serializers.CharField(source='cart_id.buyer_id.org_name', read_only=True)
     class Meta:
         model = Order
-        fields = '__all__'
-        read_only_fields = ['total_cost', 'updated_stock']
+        #fields = '__all__'
+        fields = ['id', 'seller_id', 'seller_name', 'cart_id', 'buyer_name', 'total_cost', 'status']
+        read_only_fields = ['total_cost']
     
     def __init__(self, *args, **kwargs):
         super(OrderSerializer, self).__init__(*args, **kwargs)
-        # Make 'status' read-only for all requests except PUT
+        
         if self.context['request'].method != 'PUT':
             self.fields['status'].read_only = True
  
     def get_updated_stock(self, obj):
-        # Get all stock items
         stocks = Stock.objects.all()
-        # Serialize the stock items
         return StockSerializer(stocks, many=True).data
  
     def create(self, validated_data):
         order = super().create(validated_data)
-        logger.info(f"Order created with ID: {order.id}")
         return order
  
     def update_stock(self, order):
@@ -38,22 +33,17 @@ class OrderSerializer(serializers.ModelSerializer):
             stock = Stock.objects.get(drug_id=item.drug_id)
             stock.quantity -= item.quantity
             stock.save()
-            logger.info(f"Updated stock for drug_id {item.drug_id}: new quantity {stock.quantity}")
-        # Delete cart items
+        
+        #delete the cart_item
         cart_items.delete()
-        # Set the total cost of the cart to zero and save the cart
+        #delete the cart
         cart = order.cart_id
         cart.total_cost = 0
         cart.save(update_fields=['total_cost'])
-        logger.info(f"Cart {cart.id} total cost set to zero and saved.")
-        #dummy comment
- 
-            
  
     def update(self, instance, validated_data):
         previous_status = instance.status
         instance = super().update(instance, validated_data)
         if previous_status != 'approved' and instance.status == 'approved':
-            logger.info(f"Order {instance.id} status changed to APPROVED. Updating stock.")
             self.update_stock(instance)
         return instance

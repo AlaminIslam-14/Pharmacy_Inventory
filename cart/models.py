@@ -9,7 +9,7 @@ class Cart(models.Model):
     total_cost = models.DecimalField(default=0.0, max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"Cart {self.id} for {self.buyer_id.org_name}"
+        return f"{self.buyer_id.org_name}"
     
     def save(self, *args, **kwargs):
         if UserRole.objects.filter(acc_id=self.buyer_id, role=UserRole.SELLER).exists():

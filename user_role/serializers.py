@@ -2,9 +2,10 @@ from rest_framework import serializers
 from .models import UserRole
  
 class UserRoleSerializer(serializers.ModelSerializer):
+    org_name = serializers.CharField(source='acc_id.org_name', read_only=True)
     class Meta:
         model = UserRole
-        fields = '__all__'
+        fields = ['id', 'role', 'acc_id','org_name']
  
     def validate(self, data):
         acc_id = data.get('acc_id')

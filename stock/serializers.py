@@ -6,7 +6,7 @@ class StockSerializer(serializers.ModelSerializer):
     drug_name = serializers.CharField(source='drug_id.name', read_only=True)
     class Meta:
         model = Stock
-        fields = '__all__'
+        fields = ['id', 'drug_id', 'drug_name', 'quantity']
 
     def update(self, instance, validated_data):
         drug = validated_data.get('drug_id')
