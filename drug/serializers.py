@@ -3,6 +3,7 @@ from .models import Drug
 from user_role.models import UserRole  
 
 class DrugSerializer(serializers.ModelSerializer):
+    org_name = serializers.CharField(source='acc_id.org_name', read_only=True)
     class Meta:
         model = Drug
         fields = '__all__'
