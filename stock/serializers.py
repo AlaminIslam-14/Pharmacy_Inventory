@@ -3,6 +3,7 @@ from .models import Stock
 from django.core.exceptions import ValidationError
 
 class StockSerializer(serializers.ModelSerializer):
+    drug_name = serializers.CharField(source='drug_id.name', read_only=True)
     class Meta:
         model = Stock
         fields = '__all__'

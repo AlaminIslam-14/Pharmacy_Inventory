@@ -1,5 +1,5 @@
 from rest_framework import viewsets, filters
-from django_filters.rest_framework import DjangoFilterBackend # type: ignore
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Accounts
 from .serializers import AccountsSerializer
  
