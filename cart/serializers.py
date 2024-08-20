@@ -13,7 +13,7 @@ class CartItemSerializer(serializers.ModelSerializer):
     drug_name = serializers.CharField(source='drug_id.name', read_only=True)
     class Meta:
         model = CartItem
-        fields = ['id', 'org_name', 'drug_name', 'quantity', 'item_cost']
+        fields = ['id', 'cart_id', 'org_name', 'drug_id', 'drug_name', 'quantity', 'item_cost']
         read_only_fields = ['item_cost']
         
     def validate(self, data):
