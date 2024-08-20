@@ -22,7 +22,7 @@ This is our demo of Pharmacy Management System api built using Django Rest Frame
 
 The following diagram represents the database schema:
 
-<img src="./contents/ER_Diagram.jpeg"/>
+<img src="./contents/er_Diagram.jpeg"/>
 
 
 - **Organization**: Stores organization information (name, email, password, etc.).
