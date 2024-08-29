@@ -1,6 +1,6 @@
 # Pharmacy Inventory Management System API
 
-This is our demo of Pharmacy Management System api built using Django Rest Framework. This API handles organizations, user roles, medicines, inventory management, and cart functionalities. 
+This is our demo of Pharmacy Inventory Management System api built using Django Rest Framework. This API handles organizations, user roles, medicines, inventory management, and cart functionalities. 
 
 ## Table of Contents
 
